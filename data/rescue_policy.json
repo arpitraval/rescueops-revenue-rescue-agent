@@ -1,0 +1,105 @@
+{
+  "owners": {
+    "revenue_ops": {
+      "label": "Revenue Operations",
+      "env": "RESCUEOPS_OWNER_REVENUE_OPS"
+    },
+    "engineering_auth": {
+      "label": "Engineering Auth Lead",
+      "env": "RESCUEOPS_OWNER_ENGINEERING_AUTH"
+    },
+    "customer_success": {
+      "label": "Customer Success",
+      "env": "RESCUEOPS_OWNER_CUSTOMER_SUCCESS"
+    },
+    "vp_revenue": {
+      "label": "VP Revenue",
+      "env": "RESCUEOPS_OWNER_VP_REVENUE"
+    },
+    "incident_commander": {
+      "label": "Incident Commander",
+      "env": "RESCUEOPS_OWNER_INCIDENT_COMMANDER"
+    }
+  },
+  "root_causes": {
+    "sso": "SSO reliability is blocking enterprise admins",
+    "renewal": "Revenue renewal risk is visible before CRM closure",
+    "owner": "No single accountable owner is named",
+    "sla": "Support SLA breach has escalated the customer risk",
+    "executive": "Executive sponsor is missing for a high-value account",
+    "incident": "Customer-visible incident created trust damage"
+  },
+  "fallback_actions": ["sso", "sla", "executive"],
+  "actions": {
+    "rescue_room": {
+      "title": "Rescue coordination room",
+      "owner": "revenue_ops",
+      "due_by_risk": {
+        "critical": "Now",
+        "watch": "Today",
+        "normal": "This week"
+      },
+      "reason": "Centralize sales, support, engineering, and executive decisions in Slack."
+    },
+    "sso": {
+      "title": "SSO recovery owner",
+      "owner": "engineering_auth",
+      "due_by_risk": {
+        "critical": "Today",
+        "watch": "Within 24 hours",
+        "normal": "This week"
+      },
+      "reason": "The evidence shows customer risk is increasing because SSO ownership is unclear."
+    },
+    "renewal": {
+      "title": "Renewal and expansion protection",
+      "owner": "revenue_ops",
+      "due_by_risk": {
+        "critical": "Today",
+        "watch": "This week",
+        "normal": "Before next renewal checkpoint"
+      },
+      "reason": "Commercial risk is visible before a formal CRM loss signal."
+    },
+    "owner": {
+      "title": "Accountable rescue owner",
+      "owner": "revenue_ops",
+      "due_by_risk": {
+        "critical": "Now",
+        "watch": "Today",
+        "normal": "This week"
+      },
+      "reason": "The evidence shows cross-functional work is blocked by unclear ownership."
+    },
+    "sla": {
+      "title": "Customer-safe recovery update",
+      "owner": "customer_success",
+      "due_by_risk": {
+        "critical": "Today",
+        "watch": "Within 24 hours",
+        "normal": "This week"
+      },
+      "reason": "The account needs a clear recovery update before confidence drops further."
+    },
+    "executive": {
+      "title": "Add executive sponsor",
+      "owner": "vp_revenue",
+      "due_by_risk": {
+        "critical": "Within 24 hours",
+        "watch": "This week",
+        "normal": "Before next customer meeting"
+      },
+      "reason": "A high-value renewal or expansion needs senior coverage."
+    },
+    "incident": {
+      "title": "Open customer-visible incident review",
+      "owner": "incident_commander",
+      "due_by_risk": {
+        "critical": "Today",
+        "watch": "Within 24 hours",
+        "normal": "This week"
+      },
+      "reason": "Customer-visible reliability damage needs a coordinated recovery narrative."
+    }
+  }
+}

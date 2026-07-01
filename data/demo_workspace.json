@@ -1,0 +1,204 @@
+{
+    "accounts":  {
+                     "acme":  {
+                                  "name":  "Acme Robotics",
+                                  "renewal_date":  "2026-07-30",
+                                  "revenue_at_risk":  500000,
+                                  "segment":  "Enterprise",
+                                  "owner":  "Revenue Operations"
+                              },
+                     "northstar":  {
+                                       "name":  "Northstar Health",
+                                       "renewal_date":  "2026-08-15",
+                                       "revenue_at_risk":  180000,
+                                       "segment":  "Mid-Market",
+                                       "owner":  "Customer Success"
+                                   }
+                 },
+    "evidence":  {
+                     "acme":  [
+                                  {
+                                      "source":  "support",
+                                      "channel":  "#support-acme",
+                                      "timestamp":  "2026-06-20T09:10:00+05:30",
+                                      "title":  "First admin lockout signal",
+                                      "text":  "Acme admins are blocked by SSO callback failures for the second time this month.",
+                                      "weight":  9,
+                                      "tags":  [
+                                                   "sso",
+                                                   "sla"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "jira",
+                                      "channel":  "AUTH-1124",
+                                      "timestamp":  "2026-06-22T14:25:00+05:30",
+                                      "title":  "Fix waiting on review",
+                                      "text":  "SSO callback patch is ready but waiting for reviewer assignment.",
+                                      "weight":  8,
+                                      "tags":  [
+                                                   "sso",
+                                                   "owner"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "incident",
+                                      "channel":  "#incidents",
+                                      "timestamp":  "2026-06-24T18:40:00+05:30",
+                                      "title":  "Customer-visible incident",
+                                      "text":  "Auth callback failures affected Acme Robotics and two other enterprise accounts for 117 minutes.",
+                                      "weight":  13,
+                                      "tags":  [
+                                                   "sso",
+                                                   "incident"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "crm",
+                                      "channel":  "Opportunity ACME-2026-EXP",
+                                      "timestamp":  "2026-06-26T11:00:00+05:30",
+                                      "title":  "Expansion exposed",
+                                      "text":  "USD 500k expansion closes July 30 and depends on SSO confidence.",
+                                      "weight":  12,
+                                      "tags":  [
+                                                   "renewal",
+                                                   "executive"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "slack",
+                                      "channel":  "#sales-acme",
+                                      "timestamp":  "2026-06-29T12:00:00+05:30",
+                                      "title":  "Expansion pause mentioned",
+                                      "text":  "Acme Robotics renewal call was rough. They asked whether they should pause the $500k expansion until SSO is fixed.",
+                                      "weight":  12,
+                                      "tags":  [
+                                                   "renewal",
+                                                   "sso"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "slack",
+                                      "channel":  "#sales-acme",
+                                      "timestamp":  "2026-06-29T12:01:00+05:30",
+                                      "title":  "Renewal threat",
+                                      "text":  "Acme Robotics said they may not renew if we cannot give them a clear SSO owner and date by Monday.",
+                                      "weight":  14,
+                                      "tags":  [
+                                                   "renewal",
+                                                   "sso",
+                                                   "owner"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "slack",
+                                      "channel":  "#support-acme",
+                                      "timestamp":  "2026-06-29T12:02:00+05:30",
+                                      "title":  "Third SSO ticket",
+                                      "text":  "Acme Robotics opened the third SSO ticket this week. Their admins are blocked again and the renewal team is asking for an escalation path.",
+                                      "weight":  11,
+                                      "tags":  [
+                                                   "sso",
+                                                   "sla",
+                                                   "renewal"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "slack",
+                                      "channel":  "#support-acme",
+                                      "timestamp":  "2026-06-29T12:03:00+05:30",
+                                      "title":  "SLA breached",
+                                      "text":  "SLA is now breached for Acme Robotics ticket SUP-421. Customer asked for executive escalation.",
+                                      "weight":  12,
+                                      "tags":  [
+                                                   "sla",
+                                                   "executive"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "slack",
+                                      "channel":  "#engineering-auth",
+                                      "timestamp":  "2026-06-29T12:04:00+05:30",
+                                      "title":  "No owner assigned",
+                                      "text":  "The Acme SSO fix is still waiting on review. No clear owner has been assigned for the customer escalation yet.",
+                                      "weight":  12,
+                                      "tags":  [
+                                                   "sso",
+                                                   "owner"
+                                               ]
+                                  },
+                                  {
+                                      "source":  "slack",
+                                      "channel":  "#exec-updates",
+                                      "timestamp":  "2026-06-29T12:05:00+05:30",
+                                      "title":  "No executive sponsor",
+                                      "text":  "Acme Robotics renewal is worth $500k and closes July 30. No executive sponsor is assigned yet.",
+                                      "weight":  11,
+                                      "tags":  [
+                                                   "renewal",
+                                                   "executive"
+                                               ]
+                                  }
+                              ],
+                     "northstar":  [
+                                       {
+                                           "source":  "slack",
+                                           "channel":  "#support-northstar",
+                                           "timestamp":  "2026-06-25T10:30:00+05:30",
+                                           "title":  "Reporting delay noticed",
+                                           "text":  "Northstar Health asked why reporting exports are delayed again before their quarterly review.",
+                                           "weight":  7,
+                                           "tags":  [
+                                                        "sla"
+                                                    ]
+                                       },
+                                       {
+                                           "source":  "slack",
+                                           "channel":  "#sales-northstar",
+                                           "timestamp":  "2026-06-26T15:15:00+05:30",
+                                           "title":  "Renewal confidence softening",
+                                           "text":  "Northstar Health likes the product, but the renewal owner wants confidence that reporting delays will not continue.",
+                                           "weight":  8,
+                                           "tags":  [
+                                                        "renewal",
+                                                        "owner"
+                                                    ]
+                                       },
+                                       {
+                                           "source":  "jira",
+                                           "channel":  "REPORT-884",
+                                           "timestamp":  "2026-06-27T11:00:00+05:30",
+                                           "title":  "Export backlog needs owner",
+                                           "text":  "Reporting export backlog for Northstar Health needs one assigned owner before the next customer checkpoint.",
+                                           "weight":  8,
+                                           "tags":  [
+                                                        "owner",
+                                                        "sla"
+                                                    ]
+                                       },
+                                       {
+                                           "source":  "crm",
+                                           "channel":  "Opportunity NORTHSTAR-2026-REN",
+                                           "timestamp":  "2026-06-28T09:45:00+05:30",
+                                           "title":  "Renewal at watch level",
+                                           "text":  "USD 180k Northstar Health renewal is still likely, but customer success flagged reporting reliability as a blocker to expansion.",
+                                           "weight":  9,
+                                           "tags":  [
+                                                        "renewal"
+                                                    ]
+                                       },
+                                       {
+                                           "source":  "slack",
+                                           "channel":  "#exec-updates",
+                                           "timestamp":  "2026-06-29T16:05:00+05:30",
+                                           "title":  "Executive visibility requested",
+                                           "text":  "Northstar Health asked for an executive-visible update before the renewal checkpoint next week.",
+                                           "weight":  8,
+                                           "tags":  [
+                                                        "executive",
+                                                        "renewal"
+                                                    ]
+                                       }
+                                   ]
+                 }
+}

@@ -1,0 +1,53 @@
+_metadata:
+  major_version: 2
+  minor_version: 1
+display_information:
+  name: RescueOps
+  description: Detects hidden customer risk in Slack and starts an approved rescue plan.
+  long_description: RescueOps is an AI-native Slack agent that detects hidden revenue and customer risk from work conversations, support escalations, incidents, and CRM signals. It calculates Mean Time To Rescue, shows evidence, recommends owners, and starts human-approved rescue actions inside Slack.
+  background_color: "#12343B"
+features:
+  bot_user:
+    display_name: rescueops
+    always_online: true
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: false
+  slash_commands:
+    - command: /rescueops
+      description: Scan for hidden customer risk and generate a rescue plan.
+      usage_hint: scan acme
+      url: https://YOUR-TUNNEL-URL/slack/commands
+      should_escape: false
+oauth_config:
+  scopes:
+    bot:
+      - assistant:write
+      - app_mentions:read
+      - channels:manage
+      - channels:read
+      - chat:write
+      - commands
+      - search:read.files
+      - search:read.public
+      - search:read.users
+    user:
+      - search:read.files
+      - search:read.im
+      - search:read.mpim
+      - search:read.private
+      - search:read.public
+      - search:read.users
+settings:
+  event_subscriptions:
+    bot_events:
+      - app_mention
+      - assistant_thread_started
+      - assistant_thread_context_changed
+  interactivity:
+    is_enabled: true
+    request_url: https://YOUR-TUNNEL-URL/slack/commands
+  org_deploy_enabled: false
+  socket_mode_enabled: true
+  token_rotation_enabled: false

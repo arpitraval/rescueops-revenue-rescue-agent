@@ -1,0 +1,83 @@
+{
+  "version": "2026-07-01",
+  "signals": [
+    {
+      "tag": "sso",
+      "description": "Authentication or SSO reliability risk affecting customer access.",
+      "weight": 3,
+      "patterns": ["sso", "single sign", "auth callback", "authentication", "login"]
+    },
+    {
+      "tag": "renewal",
+      "description": "Commercial renewal, expansion, contract, or revenue exposure.",
+      "weight": 3,
+      "patterns": ["renewal", "renew", "expansion", "contract", "close", "revenue"]
+    },
+    {
+      "tag": "owner",
+      "description": "Missing or unclear accountable owner.",
+      "weight": 2,
+      "patterns": ["owner", "assigned", "review", "accountable", "ownership"]
+    },
+    {
+      "tag": "sla",
+      "description": "Support SLA, ticket, blocked work, or breach risk.",
+      "weight": 2,
+      "patterns": ["sla", "ticket", "breach", "support", "blocked"]
+    },
+    {
+      "tag": "executive",
+      "description": "Executive sponsor involvement or escalation pressure.",
+      "weight": 2,
+      "patterns": ["executive", "sponsor", "vp", "escalation"]
+    },
+    {
+      "tag": "incident",
+      "description": "Incident, outage, failure, or customer-visible reliability event.",
+      "weight": 3,
+      "patterns": ["incident", "outage", "failure", "customer-visible", "callback"]
+    }
+  ],
+  "search": {
+    "max_queries": 3,
+    "intents": [
+      {
+        "name": "access_renewal_ownership",
+        "tags": ["sso", "renewal", "owner"],
+        "terms": ["escalation"]
+      },
+      {
+        "name": "support_reliability",
+        "tags": ["sla", "incident"],
+        "terms": ["customer-visible"]
+      },
+      {
+        "name": "commercial_sponsorship",
+        "tags": ["renewal", "executive"],
+        "terms": ["expansion", "sponsor"]
+      }
+    ]
+  },
+  "scoring": {
+    "base_signal_weight": 4,
+    "max_signal_weight": 15,
+    "revenue_amount_weight": 2,
+    "boosts": [
+      {
+        "name": "renewal_threat",
+        "weight": 4,
+        "patterns": ["may not renew", "pause renewal", "pause expansion", "not renew"]
+      },
+      {
+        "name": "customer_visible_failure",
+        "weight": 3,
+        "patterns": ["customer-visible", "affected customers", "callback failures"]
+      },
+      {
+        "name": "operational_blocker",
+        "weight": 3,
+        "patterns": ["breach", "blocked", "escalation", "no owner"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local secrets and runtime config
+.env
+.env.*
+*.local
+*.secret
+
+# Slack/OpenAI/local tokens
+slack-token*.txt
+*token*.txt
+*.pem
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Demo/runtime output
+*.log
