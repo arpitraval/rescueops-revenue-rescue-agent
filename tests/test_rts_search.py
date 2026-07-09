@@ -113,5 +113,39 @@ class RealTimeSearchTests(unittest.TestCase):
         self.assertEqual(client.calls[0][0], "assistant.search.info")
 
 
+
+    def test_search_accepts_slack_sdk_response_data(self) -> None:
+        class FakeSlackResponse:
+            def __init__(self, data):
+                self.data = data
+
+        account = load_account("acme")
+        client = FakeSlackClient(
+            FakeSlackResponse(
+                {
+                    "ok": True,
+                    "results": {
+                        "messages": [
+                            {
+                                "channel_name": "sales-acme",
+                                "message_ts": "2026-07-04T12:00:00",
+                                "content": "Acme Robotics renewal risk is escalating because SSO has no owner.",
+                            }
+                        ]
+                    },
+                }
+            )
+        )
+
+        evidence = search_slack_rts(
+            account,
+            token="xoxp-user-token",
+            client_factory=lambda _token: client,
+        )
+
+        self.assertGreaterEqual(len(evidence), 1)
+        self.assertEqual(evidence[0].source, "slack-rts")
+        self.assertEqual(evidence[0].channel, "sales-acme")
+
 if __name__ == "__main__":
     unittest.main()

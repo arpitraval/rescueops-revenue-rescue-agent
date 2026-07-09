@@ -177,10 +177,26 @@ def search_slack_rts(
         except SlackApiError:
             continue
 
-        evidence.extend(parse_rts_response(dict(response), account))
+        evidence.extend(parse_rts_response(slack_response_data(response), account))
 
     return dedupe_evidence(evidence)
 
+def slack_response_data(response: Any) -> dict[str, Any]:
+    if isinstance(response, dict):
+        return response
+
+    data = getattr(response, "data", None)
+    if isinstance(data, dict):
+        return data
+
+    items = getattr(response, "items", None)
+    if callable(items):
+        try:
+            return dict(items())
+        except (TypeError, ValueError):
+            return {}
+
+    return {}
 
 def parse_rts_response(response: dict[str, Any], account: Account) -> list[Evidence]:
     items = list(_walk_text_items(response))
