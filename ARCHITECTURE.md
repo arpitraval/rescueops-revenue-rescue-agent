@@ -4,13 +4,26 @@
 
 ```mermaid
 flowchart LR
-    A["Slack workspace"] --> B["Slack Real-Time Search API"]
-    B --> C["RescueCase engine"]
-    C --> D["Slack Agent UX"]
-    D --> E["Impact receipt"]
-    F["MCP business context"] --> C
-    G["Signal discovery"] --> C
-    H["Optional grounded reasoning"] --> D
+    subgraph S["Slack Platform"]
+        A["Workspace signals"] --> B["Real-Time Search API"]
+    end
+
+    subgraph R["RescueOps Agent Service"]
+        C["RTS evidence adapter"] --> D["Evidence graph"]
+        D --> E["RescueCase engine"]
+        E --> F["Action planner"]
+        G["MCP business context"] --> E
+        H["Signal discovery"] --> E
+        I["Optional grounded reasoning"] --> F
+    end
+
+    subgraph O["Outcomes in Slack"]
+        J["Agent response"] --> K["Rescue execution"]
+        K --> L["Impact receipt"]
+    end
+
+    B --> C
+    F --> J
 ```
 
 ## Live Evidence Path
