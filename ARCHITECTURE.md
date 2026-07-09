@@ -4,15 +4,13 @@
 
 ```mermaid
 flowchart LR
-    A["Slack workspace messages and files"] --> B["Slack Real-Time Search API"]
-    B --> C["RTS evidence adapter"]
-    C --> D["MCP business context"]
-    D --> E["RescueCase engine"]
-    E --> F["Grounded reasoner"]
-    F --> G["Slack Agent UX"]
-    E --> G
-    G --> H["Human-approved Slack actions"]
-    H --> I["Impact receipt and audit trail"]
+    A["Slack workspace"] --> B["Slack Real-Time Search API"]
+    B --> C["RescueCase engine"]
+    C --> D["Slack Agent UX"]
+    D --> E["Impact receipt"]
+    F["MCP business context"] --> C
+    G["Signal discovery"] --> C
+    H["Optional grounded reasoning"] --> D
 ```
 
 ## Live Evidence Path
@@ -24,7 +22,7 @@ RescueOps uses Slack Real-Time Search as the primary evidence path:
 3. Business enrichment: when `RESCUEOPS_USE_MCP=1`, `rescueops/mcp_client.py` calls the local MCP server for CRM, support, incident, and ownership context.
 4. Demo fallback: `data/demo_workspace.json` is used only for tests, `/rescueops demo`, or when Slack credentials/access are unavailable.
 
-All evidence lanes feed the same `RescueCase` pipeline, so the Slack card, score explanation, owner plan, rescue room, customer-safe update, and impact receipt are generated from the evidence returned at scan time.
+Live Slack evidence, MCP context, and discovered patterns feed the same `RescueCase` pipeline, so the Slack card, score explanation, owner plan, rescue room, customer-safe update, and impact receipt are generated from the evidence returned at scan time.
 
 ## Work Risk Graph
 
