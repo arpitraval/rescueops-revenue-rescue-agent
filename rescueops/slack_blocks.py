@@ -123,11 +123,14 @@ def render_root_causes(case: RescueCase) -> str:
     return "\n".join(f"- {item}" for item in case.root_causes)
 
 
+def format_evidence_channel(channel: str) -> str:
+    return "Live RTS result" if channel == "Slack RTS" else channel
+
 def render_evidence(case: RescueCase) -> str:
     top_items = sorted(case.evidence, key=lambda item: item.weight, reverse=True)[:5]
     if not top_items:
         return "- No live evidence found yet."
     return "\n".join(
-        f"- `{item.channel}` {item.title}: {item.text}"
+        f"- `{format_evidence_channel(item.channel)}` {item.title}: {item.text}"
         for item in top_items
     )

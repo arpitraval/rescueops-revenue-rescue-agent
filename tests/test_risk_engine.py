@@ -176,6 +176,12 @@ class RiskEngineTests(unittest.TestCase):
         self.assertIn("renewal", evidence[0].tags)
         self.assertIn("sso", evidence[0].tags)
 
+
+    def test_generic_rts_channel_is_displayed_as_search_result(self) -> None:
+        from rescueops.slack_blocks import format_evidence_channel
+
+        self.assertEqual(format_evidence_channel("Slack RTS"), "Live RTS result")
+        self.assertEqual(format_evidence_channel("sales-acme"), "sales-acme")
     def test_taxonomy_detects_owner_risk(self) -> None:
         tags = infer_tags("Acme Robotics SSO escalation has no owner assigned.")
 
