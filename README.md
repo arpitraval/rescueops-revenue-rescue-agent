@@ -1,22 +1,22 @@
 # RescueOps for Slack
 
-RescueOps is a Slack-native revenue rescue agent that uses Slack Real-Time Search and Slack AI surfaces to find hidden customer risk inside work conversations, explain the evidence, and launch an approved rescue workflow.
+RescueOps is a Slack-native revenue rescue agent that uses end-to-end Slack Real-Time Search and Slack AI surfaces to find hidden customer risk inside work conversations, explain the evidence, and launch an approved rescue workflow.
 
 ## Core Technology
 
-Primary capability: **Real-Time Search API**
+Primary qualifying capability: **Real-Time Search API**
 
 Agent experience: **Slack AI capabilities**
 
-Supporting capability: **MCP server integration** for business-system evidence.
+Supporting qualifying capability: **MCP server integration** for business-system evidence.
 
 RescueOps uses:
 
-- `assistant.search.info` to verify whether Slack Real-Time Search is reachable in the workspace.
-- `assistant.search.context` to pull live Slack evidence for an account when RTS is enabled.
+- `assistant.search.info` to verify that Slack Real-Time Search and semantic AI search are reachable in the workspace.
+- `assistant.search.context` to pull live Slack evidence for an account during `/rescueops scan` and `/rescueops live`.
 - Slack AI assistant hooks for dynamic suggested prompts and grounded account-risk briefs.
 - Slack Block Kit and interactive actions to approve rescue steps inside Slack.
-- MCP-style connectors for CRM, support, incident, and revenue context.
+- A stdio MCP business server for CRM, support, incident, and revenue context.
 
 ## Demo Scenario
 
@@ -26,7 +26,7 @@ Problem: SSO reliability issues are scattered across sales, support, incidents, 
 
 RescueOps:
 
-1. Searches live Slack evidence through the official RTS API.
+1. Searches live Slack evidence through the official Slack Real-Time Search API.
 2. Scores the account from current evidence.
 3. Explains root causes and weighted signals.
 4. Shows expected protected revenue.
@@ -45,13 +45,13 @@ Run the app, then use these commands in Slack:
 /rescueops live acme
 ```
 
-Expected behavior:
+Expected behavior with the configured sandbox:
 
-- `/rescueops rts-check` calls Slack `assistant.search.info` and reports whether RTS/AI search is reachable.
+- `/rescueops rts-check` calls Slack `assistant.search.info` and reports `API status: ready`, `Slack status code: ai_search_enabled`, and `Semantic AI search enabled: yes`.
 - `/rescueops scan acme` runs the live RTS workflow by default.
 - `/rescueops live acme` is an explicit alias for the same live RTS workflow.
-- If Slack returns live evidence, the card shows `Evidence source: Live Slack RTS`.
-- If Slack blocks the call in a sandbox, the card can use demo workspace evidence and tells you to run `rts-check`.
+- If Slack returns live evidence with MCP enabled, the card shows `Evidence source: Live Slack RTS + MCP business context`.
+- If Slack credentials or RTS access are unavailable in a different workspace, `/rescueops demo` remains available for deterministic judging.
 - `/rescueops demo acme` is the only deterministic fallback demo command.
 - `/rescueops hybrid acme` is an optional comparison mode that merges RTS with baseline evidence.
 
@@ -63,12 +63,12 @@ Slack notes from the official API behavior:
 
 ## Dynamic Evidence, Not a Canned Chatbot
 
-The demo includes stable fixture data only as a named fallback, but the submission path is live RTS:
+The submitted agent path is live RTS. Stable fixture data exists only for reproducible local tests and the explicit `/rescueops demo` command:
 
-- `/rescueops scan acme`, `/rescueops scan Globex Corp`, and app mentions use `RESCUEOPS_EVIDENCE_MODE=rts` by default.
+- `/rescueops scan acme`, `/rescueops live acme`, `/rescueops scan Globex Corp`, and app mentions use `RESCUEOPS_EVIDENCE_MODE=rts` by default.
 - `rescueops/data_loader.py` resolves known fixture accounts and creates ad hoc account records for unknown live account names.
 - `rescueops/rts_search.py` builds RTS queries from `data/risk_taxonomy.json`, calls Slack RTS, and converts returned Slack snippets into weighted evidence.
-- `RESCUEOPS_EVIDENCE_MODE=rts` forces the live API path and only falls back when Slack does not return evidence.
+- `RESCUEOPS_EVIDENCE_MODE=rts` uses Slack Real-Time Search as the primary path and only falls back when Slack does not return evidence.
 - `RESCUEOPS_EVIDENCE_MODE=hybrid` is optional and merges live RTS with baseline evidence for comparison.
 - `RESCUEOPS_USE_MCP=1` enriches Slack evidence with MCP business-system signals.
 - Revenue at risk can be read from configured account data or inferred from money amounts found in live evidence.
@@ -153,6 +153,14 @@ $env:SLACK_USER_TOKEN="xoxp-..."
 /rescueops scan acme
 ```
 
+For the clearest recorded proof, run:
+
+```text
+/rescueops rts-check
+/rescueops live acme
+```
+
+The Slack card should show `Evidence source: Live Slack RTS + MCP business context` when `RESCUEOPS_USE_MCP=1`.
 Do not commit Slack tokens.
 
 ## Tests

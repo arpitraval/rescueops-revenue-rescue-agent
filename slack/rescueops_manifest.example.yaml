@@ -3,8 +3,8 @@ _metadata:
   minor_version: 1
 display_information:
   name: RescueOps
-  description: Detects hidden customer risk in Slack and starts an approved rescue plan.
-  long_description: RescueOps is an AI-native Slack agent that detects hidden revenue and customer risk from work conversations, support escalations, incidents, and CRM signals. It calculates Mean Time To Rescue, shows evidence, recommends owners, and starts human-approved rescue actions inside Slack.
+  description: Finds live customer risk with Slack RTS and starts an approved rescue plan.
+  long_description: RescueOps is an AI-native Slack agent that uses Slack Real-Time Search to detect hidden revenue and customer risk from work conversations, then enriches the evidence with MCP business context. It calculates Mean Time To Rescue, shows evidence, recommends owners, and starts human-approved rescue actions inside Slack.
   background_color: "#12343B"
 features:
   bot_user:
