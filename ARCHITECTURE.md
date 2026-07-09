@@ -4,26 +4,26 @@
 
 ```mermaid
 flowchart LR
-    subgraph S["Slack Platform"]
-        A["Workspace signals"] --> B["Real-Time Search API"]
+    subgraph slack_platform["Slack Platform"]
+        workspace_signals["Workspace signals"] --> realtime_search["Real-Time Search API"]
     end
 
-    subgraph R["RescueOps Agent Service"]
-        C["RTS evidence adapter"] --> D["Evidence graph"]
-        D --> E["RescueCase engine"]
-        E --> F["Action planner"]
-        G["MCP business context"] --> E
-        H["Signal discovery"] --> E
-        I["Optional grounded reasoning"] --> F
+    subgraph rescueops_service["RescueOps Agent Service"]
+        rts_adapter["RTS evidence adapter"] --> evidence_graph["Evidence graph"]
+        evidence_graph --> rescuecase_engine["RescueCase engine"]
+        rescuecase_engine --> action_planner["Action planner"]
+        mcp_context["MCP business context"] --> rescuecase_engine
+        signal_discovery["Signal discovery"] --> rescuecase_engine
+        grounded_reasoning["Grounded reasoning layer"] --> action_planner
     end
 
-    subgraph O["Outcomes in Slack"]
-        J["Agent response"] --> K["Rescue execution"]
-        K --> L["Impact receipt"]
+    subgraph outcomes["Outcomes in Slack"]
+        agent_response["Agent response"] --> rescue_execution["Rescue execution"]
+        rescue_execution --> impact_receipt["Impact receipt"]
     end
 
-    B --> C
-    F --> J
+    realtime_search --> rts_adapter
+    action_planner --> agent_response
 ```
 
 ## Live Evidence Path
@@ -70,4 +70,4 @@ flowchart TD
 /rescueops demo acme
 ```
 
-`/rescueops rts-check` proves Slack RTS availability. `/rescueops scan acme` and `/rescueops live acme` run the live RTS lane and display the evidence source on the Slack card. `/rescueops demo acme` is the named deterministic fallback. `/rescueops hybrid acme` is an optional comparison mode.
+`/rescueops rts-check` proves Slack RTS availability and `/rescueops live acme` demonstrates the live proof path: Live Slack RTS + MCP business context. `/rescueops scan acme` and `/rescueops live acme` run the live RTS lane and display the evidence source on the Slack card. `/rescueops demo acme` is the named deterministic fallback. `/rescueops hybrid acme` is an optional comparison mode.
