@@ -15,6 +15,7 @@ from rescueops.slack_blocks import format_evidence_source, render_blocks, render
 
 
 CLOSED_CASES: set[str] = set()
+RESCUE_PLAN_POSTED: set[str] = set()
 
 
 def scan_for_workflow(account_id: str, evidence_mode: str | None = None):
@@ -211,8 +212,12 @@ def create_rescue_room(client, account_id: str) -> str:
     if not channel_id:
         return "Could not resolve the rescue channel."
 
+    if account_id in RESCUE_PLAN_POSTED:
+        return f"Rescue room is ready in <#{channel_id}>. The approved rescue plan is already posted there."
+
     client.chat_postMessage(channel=channel_id, text=build_rescue_plan_text(account_id))
-    return f"Created <#{channel_id}> and posted the approved rescue plan."
+    RESCUE_PLAN_POSTED.add(account_id)
+    return f"Rescue room ready in <#{channel_id}>. Posted the approved internal rescue plan there."
 
 
 def assign_owner(client, account_id: str) -> str:
