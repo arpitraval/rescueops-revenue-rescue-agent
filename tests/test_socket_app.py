@@ -21,6 +21,26 @@ class SocketAppTests(unittest.TestCase):
         self.assertIn("USD 500,000", text)
         self.assertIn("96% reduction", text)
 
+    def test_existing_rescue_room_does_not_repost_plan(self) -> None:
+        from rescueops.socket_app import RESCUE_PLAN_POSTED, create_rescue_room
+
+        class ExistingRoomClient:
+            def __init__(self) -> None:
+                self.posts = []
+
+            def conversations_list(self, **_kwargs):
+                return {"channels": [{"name": "rescue-acme", "id": "C_RESCUE"}]}
+
+            def chat_postMessage(self, **kwargs):
+                self.posts.append(kwargs)
+
+        RESCUE_PLAN_POSTED.discard("acme")
+        client = ExistingRoomClient()
+
+        message = create_rescue_room(client, "acme")
+
+        self.assertIn("Rescue room is ready", message)
+        self.assertEqual(client.posts, [])
     def test_owner_update_contains_checkpoint(self) -> None:
         from rescueops.socket_app import build_owner_update_text
 

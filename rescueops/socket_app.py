@@ -189,39 +189,40 @@ def find_channel_id(client, channel_name: str) -> str | None:
             return None
 
 
-def get_or_create_rescue_room(client, account_id: str) -> tuple[str | None, str | None]:
+def get_or_create_rescue_room(client, account_id: str) -> tuple[str | None, str | None, bool]:
     channel_name = f"rescue-{account_id}"
     channel_id = find_channel_id(client, channel_name)
     if channel_id:
-        return channel_id, None
+        return channel_id, None, False
 
     try:
         result = client.conversations_create(name=channel_name, is_private=False)
-        return result["channel"]["id"], None
+        return result["channel"]["id"], None, True
     except SlackApiError as error:
         slack_error = error.response.get("error", "unknown_error")
         if slack_error == "missing_scope":
-            return None, "I need the `channels:manage` bot scope. Add it, reinstall, then restart me."
-        return None, f"Could not create #{channel_name}: {slack_error}"
+            return None, "I need the `channels:manage` bot scope. Add it, reinstall, then restart me.", False
+        return None, f"Could not create #{channel_name}: {slack_error}", False
 
 
 def create_rescue_room(client, account_id: str) -> str:
-    channel_id, error = get_or_create_rescue_room(client, account_id)
+    channel_id, error, created = get_or_create_rescue_room(client, account_id)
     if error:
         return error
     if not channel_id:
         return "Could not resolve the rescue channel."
 
-    if account_id in RESCUE_PLAN_POSTED:
-        return f"Rescue room is ready in <#{channel_id}>. The approved rescue plan is already posted there."
+    if account_id in RESCUE_PLAN_POSTED or not created:
+        RESCUE_PLAN_POSTED.add(account_id)
+        return f"Rescue room is ready in <#{channel_id}>. Existing rescue plan stays preserved; no duplicate plan was posted."
 
     client.chat_postMessage(channel=channel_id, text=build_rescue_plan_text(account_id))
     RESCUE_PLAN_POSTED.add(account_id)
-    return f"Rescue room ready in <#{channel_id}>. Posted the approved internal rescue plan there."
+    return f"Rescue room created in <#{channel_id}>. Posted the approved internal rescue plan there."
 
 
 def assign_owner(client, account_id: str) -> str:
-    channel_id, error = get_or_create_rescue_room(client, account_id)
+    channel_id, error, _created = get_or_create_rescue_room(client, account_id)
     if error:
         return error
     if not channel_id:
