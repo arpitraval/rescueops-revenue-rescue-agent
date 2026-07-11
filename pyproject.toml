@@ -7,5 +7,8 @@ dependencies = [
     "slack_bolt>=1.28.0",
 ]
 
+[tool.setuptools]
+packages = ["rescueops"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
