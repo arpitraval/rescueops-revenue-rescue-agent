@@ -1,0 +1,16 @@
+[Unit]
+Description=RescueOps Slack Socket Mode Worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=rescueops
+WorkingDirectory=/opt/rescueops
+EnvironmentFile=/etc/rescueops/rescueops.env
+ExecStart=/opt/rescueops/.venv/bin/python -m rescueops.socket_app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

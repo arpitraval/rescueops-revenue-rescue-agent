@@ -61,6 +61,11 @@ Slack notes from the official API behavior:
 - User-token RTS calls do not require an `action_token`.
 - Add the search scopes, reinstall the app, then restart the Socket Mode process.
 
+## Runtime Model
+
+RescueOps runs as a Slack Socket Mode worker. The process opens an outbound connection to Slack, handles slash commands and Block Kit actions, and does not require a public webhook URL.
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the runtime environment variables and service template. Do not commit real Slack tokens.
 ## Dynamic Evidence, Not a Canned Chatbot
 
 The submitted agent path is live RTS. Stable fixture data exists only for reproducible local tests and the explicit `/rescueops demo` command:
@@ -172,3 +177,5 @@ Do not commit Slack tokens.
 ## One-line Pitch
 
 RescueOps turns Slack from the place where revenue risk is discussed into the place where revenue risk is detected, explained, approved, and rescued.
+
+
